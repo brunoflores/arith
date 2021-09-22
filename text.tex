@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{soul}
+\usepackage{float}
+
+\title{Types and Programming Languages (Pierce)}
+\author{Bruno Flores}
+\date{September 2021}
+
+\begin{document}
+
+\maketitle
+
+\section{Untyped Arithmetic Expressions}
+
+\subsection{Syntax}
+
+\begin{figure}[h!]
+    \begin{verbatim}
+        t ::=
+            true
+            false
+            if t then t else t
+            0
+            succ t
+            pred t
+            iszero t
+    \end{verbatim}
+    \caption{BNF}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{enumerate}
+        \item \{\texttt{true, false, 0}\} \(\subseteq\) \(\mathcal{T}\);
+        \item 
+            if \texttt{t\(_1\)} \(\subseteq\) \(\mathcal{T}\), 
+            then \{\texttt{succ t\(_1\), pred t\(_1\), iszero t\(_1\)}\} \(\subseteq\) \(\mathcal{T}\);
+        \item 
+            if \texttt{t\(_1\)} \(\subseteq\) \(\mathcal{T}\), \texttt{t\(_2\)} \(\subseteq\) \(\mathcal{T}\),
+            and \texttt{t\(_3\)} \(\subseteq\) \(\mathcal{T}\), 
+            then \texttt{if t\(_1\) then t\(_2\) else t\(_3\)} \(\subseteq\) \(\mathcal{T}\).
+    \end{enumerate}
+    \caption{Terms, inductively}
+\end{figure}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c c c}
+         \texttt{true} \(\subseteq\) \(\mathcal{T}\) & \texttt{false} \(\subseteq\) \(\mathcal{T}\) & \texttt{0} \(\subseteq\) \(\mathcal{T}\) \\
+         \\
+         \begin{tabular}{c}
+              t\(_1\) \(\subseteq\) \(\mathcal{T}\) \\
+              \hline
+              \texttt{succ t\(_1\)} \(\subseteq\) \(\mathcal{T}\)
+         \end{tabular} & \begin{tabular}{c}
+              t\(_1\) \(\subseteq\) \(\mathcal{T}\) \\
+              \hline
+              \texttt{pred t\(_1\)} \(\subseteq\) \(\mathcal{T}\)
+         \end{tabular} & \begin{tabular}{c}
+              t\(_1\) \(\subseteq\) \(\mathcal{T}\) \\
+              \hline
+              \texttt{iszero t\(_1\)} \(\subseteq\) \(\mathcal{T}\)
+         \end{tabular} \\
+         \\
+         \multicolumn{3}{c}{
+             \begin{tabular}{c}
+                  t\(_1\) \(\subseteq\) \(\mathcal{T}\) t\(_2\) \(\subseteq\) \(\mathcal{T}\) t\(_3\) \(\subseteq\) \(\mathcal{T}\) \\
+                  \hline
+                  \texttt{if t\(_1\) then t\(_2\) else t\(_3\)} \(\subseteq\) \(\mathcal{T}\)
+             \end{tabular}
+         }
+    \end{tabular}
+    \caption{Terms, by inference rules}
+    \label{tab:my_label}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l l l l}
+        S\(_0\) & = & \(\emptyset\) & \\
+        S\(_{\textit{i}+1}\) & = & & \{\texttt{true, false, 0}\} \\
+        & & \(\cup\) & \{\texttt{succ t\(_1\), pred t\(_1\), iszero t\(_1\)} \(|\) \texttt{t\(_1\)} \(\in\) S\(_i\)\} \\
+        & & \(\cup\) & \{\texttt{if t\(_1\) then t\(_2\) else t\(_3\)} \(|\) \texttt{t\(_1\), t\(_2\), t\(_3\)} \(\in\) S\(_i\)\}
+    \end{tabular}
+    \caption{Terms, concretely}
+\end{table}
+
+Let
+
+\begin{center}
+    S = \(\underset{i}{\text{\Large\(\cup\)}}\) S\(_i\).
+\end{center}
+
+S\(_0\) is empty; S\(_1\) contains just the constants; S\(_2\) contains the constants plus the phrases that can be built with constants and just one \texttt{succ, pred, iszero}, or \texttt{if}; S\(_3\) contains these and all phrases that can be built using \texttt{succ, pred, iszero}, and \texttt{if} on phrases in S\(_2\); and so on. \hl{S collects together all the phrases that can be built this way.}
+
+\end{document}
