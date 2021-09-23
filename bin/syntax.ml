@@ -1,4 +1,4 @@
-type info = String
+open Support.Error
 
 type term =
     TmTrue of info
