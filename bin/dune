@@ -1,7 +1,7 @@
 (executable
  (public_name arith)
  (name main)
- (modules main syntax core)
+ (modules main support syntax core)
  (libraries arith base cmdliner)
  (preprocess
   (pps ppx_inline_test)))
