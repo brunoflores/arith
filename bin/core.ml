@@ -8,11 +8,11 @@ let rec isnumericval t = match t with
   | TmSucc (_, t1) -> isnumericval t1
   | _ -> false
 
-let isval t = match t with
-    TmTrue (_) -> true
-  | TmFalse (_) -> true
-  | t when isnumericval t -> true
-  | _ -> false
+(* let isval t = match t with
+ *     TmTrue (_) -> true
+ *   | TmFalse (_) -> true
+ *   | t when isnumericval t -> true
+ *   | _ -> false *)
 
 let rec eval1 t = match t with
     TmIf (_, TmTrue (_), t2, _) -> t2
@@ -27,4 +27,7 @@ let rec eval1 t = match t with
   | TmIsZero (i, t1) -> let t1' = eval1 t1 in TmIsZero (i, t1')
   | _ -> raise NoRuleApplies
 
-let eval = ()
+let rec eval t =
+  try let t' = eval1 t in
+    eval t'
+  with NoRuleApplies -> t

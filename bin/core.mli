@@ -1,1 +1,3 @@
-val eval : unit
+open Syntax
+
+val eval : term -> term

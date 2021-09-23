@@ -3,8 +3,8 @@ open Support.Error
 type term =
     TmTrue of info
   | TmFalse of info
-  | TmIf of info * term * term * term
   | TmZero of info
+  | TmIf of info * term * term * term
   | TmSucc of info * term
   | TmPred of info * term
   | TmIsZero of info * term
