@@ -1,7 +1,14 @@
+(ocamllex
+  (modules lexer))
+
+(menhir
+ (modules parser)
+ (flags --table --strict))
+
 (executable
  (public_name arith)
  (name main)
- (modules main support syntax core)
- (libraries arith base cmdliner)
+ (modules main support syntax lexer parser arith)
+ (libraries arith core cmdliner menhirLib)
  (preprocess
-  (pps ppx_inline_test)))
+  (pps ppx_inline_test ppx_jane ppx_deriving.show)))

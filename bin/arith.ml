@@ -1,5 +1,4 @@
 open Syntax
-open Support.Error
 
 exception NoRuleApplies
 
@@ -19,11 +18,11 @@ let rec eval1 t = match t with
   | TmIf (_, TmFalse (_), _, t3) -> t3
   | TmIf (i, t1, t2, t3) -> let t1' = eval1 t1 in TmIf (i, t1', t2, t3)
   | TmSucc (i, t1) -> let t1' = eval1 t1 in TmSucc (i, t1')
-  | TmPred (_, TmZero (_)) -> TmZero (dummyinfo)
+  | TmPred (_, TmZero (i)) -> TmZero (i)
   | TmPred (_, TmSucc (_, nv1)) when isnumericval nv1 -> nv1
   | TmPred (i, t1) -> let t1' = eval1 t1 in TmPred (i, t1')
-  | TmIsZero (_, TmZero (_)) -> TmTrue (dummyinfo)
-  | TmIsZero (_, TmSucc (_, nv1)) when isnumericval nv1 -> TmFalse (dummyinfo)
+  | TmIsZero (_, TmZero (i)) -> TmTrue (i)
+  | TmIsZero (_, TmSucc (i, nv1)) when isnumericval nv1 -> TmFalse (i)
   | TmIsZero (i, t1) -> let t1' = eval1 t1 in TmIsZero (i, t1')
   | _ -> raise NoRuleApplies
 
