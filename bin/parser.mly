@@ -10,6 +10,10 @@
 %}
 
 %token TRUE
+%token FALSE
+%token IF
+%token THEN
+%token ELSE
 %token SEMICOLON
 %token EOF
 
@@ -18,7 +22,15 @@
 %%
 
 prog:
-  | TRUE; SEMICOLON
-    { Some (TmTrue (pos_of_lexing_position $startpos)) }
+  | e = expr; SEMICOLON
+    { Some e }
+  | IF; e1 = expr; THEN; e2 = expr; ELSE; e3 = expr; SEMICOLON
+    { Some (TmIf ((pos_of_lexing_position $startpos), e1, e2, e3)) }
   | EOF
     { None }
+
+expr:
+  | TRUE
+    { TmTrue (pos_of_lexing_position $startpos) }
+  | FALSE
+    { TmFalse (pos_of_lexing_position $startpos) }
