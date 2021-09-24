@@ -4,11 +4,14 @@
   exception Error of string
 }
 
+let zeroes = '0'+
 let white = [' ' '\t']+
 
 rule read = parse
   | white
     { read lexbuf }
+  | zeroes
+    { ZERO }
   | "if"
     { IF }
   | "then"

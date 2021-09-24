@@ -9,6 +9,7 @@
       pos_cnum = pos.pos_cnum }
 %}
 
+%token ZERO
 %token TRUE
 %token FALSE
 %token IF
@@ -30,6 +31,8 @@ prog:
     { None }
 
 expr:
+  | ZERO
+    { TmZero (pos_of_lexing_position $startpos) }
   | TRUE
     { TmTrue (pos_of_lexing_position $startpos) }
   | FALSE
