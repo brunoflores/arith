@@ -8,6 +8,7 @@
 (library
  (name arithLib)
  (inline_tests)
+ (modules arith parser lexer support syntax)
  (libraries core menhirLib)
  (preprocess
   (pps ppx_inline_test)))
