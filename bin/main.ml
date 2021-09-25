@@ -14,11 +14,17 @@ let print_position outx (lexbuf : Lexing.lexbuf) =
 let show text positions =
   E.extract text positions |> E.sanitize |> E.compress |> E.shorten 20
 
-let string_of_term = function
+let rec int_of_term = function
+  | Syntax.TmSucc (_, v) -> 1 + int_of_term v
+  | Syntax.TmPred (_, v) -> 1 - int_of_term v
+  | _ -> 0
+
+let string_of_term (t : Syntax.term) = match t with
   | Syntax.TmTrue (_) -> "true"
   | Syntax.TmFalse (_) -> "false"
   | Syntax.TmZero (_) -> "0"
-  | _ -> failwith "cannot print non-value"
+  | Syntax.TmSucc _ | Syntax.TmPred _ -> string_of_int (int_of_term t)
+  | _ -> failwith "cannot print"
 
 let succeed (v : Syntax.term option) = match v with
   | Some (v) -> (printf "%s\n" (string_of_term (Arith.eval v)))

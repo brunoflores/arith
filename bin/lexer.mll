@@ -12,6 +12,10 @@ rule read = parse
     { read lexbuf }
   | zeroes
     { ZERO }
+  | "succ"
+    { SUCC }
+  | "pred"
+    { PRED }
   | "if"
     { IF }
   | "then"
@@ -24,6 +28,10 @@ rule read = parse
     { FALSE }
   | ';'
     { SEMICOLON }
+  | '('
+    { LPAREN }
+  | ')'
+    { RPAREN }
   | eof
     { EOF }
   | _

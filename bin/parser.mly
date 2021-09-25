@@ -9,6 +9,10 @@
       pos_cnum = pos.pos_cnum }
 %}
 
+%token PRED
+%token SUCC
+%token LPAREN
+%token RPAREN
 %token ZERO
 %token TRUE
 %token FALSE
@@ -31,6 +35,12 @@ prog:
     { None }
 
 expr:
+  | SUCC; e = expr
+  | SUCC; LPAREN; e = expr; RPAREN
+    { TmSucc ((pos_of_lexing_position $startpos), e) }
+  | PRED; e = expr
+  | PRED; LPAREN; e = expr; RPAREN
+    { TmPred ((pos_of_lexing_position $startpos), e) }
   | ZERO
     { TmZero (pos_of_lexing_position $startpos) }
   | TRUE
