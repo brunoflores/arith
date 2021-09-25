@@ -1,6 +1,13 @@
+(ocamllex
+  (modules lexer))
+
+(menhir
+ (modules parser)
+ (flags --table --strict))
+
 (library
+ (name arithLib)
  (inline_tests)
- (name arith)
- (libraries base cmdliner)
+ (libraries core menhirLib)
  (preprocess
   (pps ppx_inline_test)))

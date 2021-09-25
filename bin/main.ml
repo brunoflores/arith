@@ -2,7 +2,12 @@ open Core
 
 module E = MenhirLib.ErrorReports
 module L = MenhirLib.LexerUtil
-module I = Parser.MenhirInterpreter
+module A = ArithLib
+module I = A.Parser.MenhirInterpreter
+module Syntax  = A.Syntax
+module Parser = A.Parser
+module Lexer = A.Lexer
+module Arith = A.Arith
 
 let print_position outx (lexbuf : Lexing.lexbuf) =
   let pos = lexbuf.lex_curr_p in
