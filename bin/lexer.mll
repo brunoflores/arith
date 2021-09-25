@@ -12,6 +12,8 @@ rule read = parse
     { read lexbuf }
   | zeroes
     { ZERO }
+  | "iszero"
+    { ISZERO }
   | "succ"
     { SUCC }
   | "pred"
