@@ -3,6 +3,7 @@
 \usepackage{mathtools}
 \usepackage{soul}
 \usepackage{float}
+\usepackage{listings}
 
 \title{Types and Programming Languages (Pierce)}
 \author{Bruno Flores}
@@ -93,5 +94,17 @@ Let
 \end{center}
 
 S\(_0\) is empty; S\(_1\) contains just the constants; S\(_2\) contains the constants plus the phrases that can be built with constants and just one \texttt{succ, pred, iszero}, or \texttt{if}; S\(_3\) contains these and all phrases that can be built using \texttt{succ, pred, iszero}, and \texttt{if} on phrases in S\(_2\); and so on. \hl{S collects together all the phrases that can be built this way.}
+
+\subsection{Semantics}
+
+\textit{Operational semantics} specifies the behaviour of a programming language by defining a simple \textit{abstract machine} for it. This machine is "abstract" in the sense that it uses the terms of the language as its machine code, rather than some low-level microprocessor instruction set. For simple languages, a \textit{state} of the machine is just a term, and the machine's behaviour is defined by a \textit{transition function} that, for each state, either gives the next state by performing a step of simplification on the term or declares that the machine has halted. The \textit{meaning} of a term \texttt{t} can be taken to be the final state that the machine reaches when started with \texttt{t} as its initial state.
+
+\hl{Strictly speaking, the above describes the \textit{small-step} style of operational semantics.}
+
+\subsubsection{Run-time error}
+
+From the concept of "stuckness". Intuitively, it characterises situations where the operational semantics does not know what to do because the program has reached a "meaningless state".
+
+\paragraph{Definition} A closed term is \textit{stuck} if it is in normal form but not a value.
 
 \end{document}
