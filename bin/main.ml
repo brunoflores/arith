@@ -1,9 +1,8 @@
 open Core
-
 module E = MenhirLib.ErrorReports
 module L = MenhirLib.LexerUtil
 module A = ArithLib
-module Syntax  = A.Syntax
+module Syntax = A.Syntax
 module Parser = A.Parser
 module Lexer = A.Lexer
 module Arith = A.Arith
@@ -24,15 +23,17 @@ let rec int_of_term = function
   | Syntax.TmPred (_, v) -> 1 - int_of_term v
   | _ -> 0
 
-let string_of_term (t : Syntax.term) = match t with
-  | Syntax.TmTrue (_) -> "true"
-  | Syntax.TmFalse (_) -> "false"
-  | Syntax.TmZero (_) -> "0"
+let string_of_term (t : Syntax.term) =
+  match t with
+  | Syntax.TmTrue _ -> "true"
+  | Syntax.TmFalse _ -> "false"
+  | Syntax.TmZero _ -> "0"
   | Syntax.TmSucc _ | Syntax.TmPred _ -> string_of_int (int_of_term t)
   | _ -> failwith "cannot print"
 
-let succeed (v : Syntax.term option) = match v with
-  | Some (v) -> (printf "%s\n" (string_of_term (Arith.eval v)))
+let succeed (v : Syntax.term option) =
+  match v with
+  | Some v -> printf "%s\n" (string_of_term (Arith.eval v))
   | None -> ()
 
 let fail text buffer _ =

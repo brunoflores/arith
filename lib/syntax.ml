@@ -1,7 +1,7 @@
 open Support.Error
 
 type term =
-    TmTrue of info
+  | TmTrue of info
   | TmFalse of info
   | TmZero of info
   | TmIf of info * term * term * term
