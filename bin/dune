@@ -1,6 +1,6 @@
 (executable
   (name main)
   (modules main)
-  (libraries core arithLib)
+  (libraries core_unix core_unix.filename_unix core_unix.command_unix stdio arithLib)
   (preprocess
     (pps ppx_jane ppx_deriving.show)))
